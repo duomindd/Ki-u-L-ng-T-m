@@ -43,6 +43,7 @@ async function getBadges(targetUser) {
 }
 
 async function handle(interaction) {
+    console.log(`👤 [UserCheck] Lệnh /user từ ${interaction.user.tag}`);
     const targetUser = interaction.options.getUser('user') || interaction.user;
 
     let member = null;
@@ -105,6 +106,7 @@ async function handle(interaction) {
 }
 
 function setupInteraction(client) {
+    console.log('   🔧 [UserCheck] Setup user check command handler');
     client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
         if (interaction.commandName === 'user') {

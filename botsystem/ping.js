@@ -62,6 +62,7 @@ function measureEventLoopLag() {
 }
 
 async function handle(interaction) {
+    console.log(`🏓 [Ping] Lệnh /ping từ ${interaction.user.tag}`);
     const t0 = Date.now();
     const sent = await interaction.reply({ content: '🏓 Đang đo tất cả chỉ số...', withResponse: true });
     const t1 = Date.now();
@@ -125,6 +126,7 @@ async function handle(interaction) {
 }
 
 function setupInteraction(client) {
+    console.log('   🔧 [Ping] Setup ping command handler');
     client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
         if (interaction.commandName === 'ping') {

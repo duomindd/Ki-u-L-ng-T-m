@@ -1,6 +1,7 @@
 const { AttachmentBuilder } = require('discord.js');
 
 function setupPingReply(client) {
+    console.log('   🔧 [PingReply] Setup ping reply handler');
     client.on('messageCreate', async (message) => {
         if (message.author.bot || !message.guild || !message.member) return;
 
@@ -19,6 +20,7 @@ function setupPingReply(client) {
         
         // Check nếu là reply vào tin nhắn của bot hoặc ping trực tiếp
         if (client.user && (isMentioned || isReplyToBot) && !message.mentions.everyone) {
+            console.log(`📢 [PingReply] ${message.author.tag} đã ping/reply bot`);
             try {
                 const imagePath = __dirname + '/../klt.png';
                 const attachment = new AttachmentBuilder(imagePath, { name: 'klt.png' });

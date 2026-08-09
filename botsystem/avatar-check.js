@@ -1,6 +1,7 @@
 const { EmbedBuilder } = require('discord.js');
 
 async function handle(interaction) {
+    console.log(`🖼️ [Avatar] Lệnh /avatar từ ${interaction.user.tag}`);
     const targetUser = interaction.options.getUser('user') || interaction.user;
     
     // Fetch user để lấy thông tin banner
@@ -29,6 +30,7 @@ async function handle(interaction) {
 }
 
 function setupInteraction(client) {
+    console.log('   🔧 [Avatar] Setup avatar command handler');
     client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
         if (interaction.commandName === 'avatar') {

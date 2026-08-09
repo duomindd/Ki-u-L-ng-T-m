@@ -19,8 +19,13 @@ if (fs.existsSync(envPath)) {
 }
 
 function setupWelcome(client) {
+    console.log('   🔧 [Welcome] Setup welcome handler cho guild:', process.env.MY_GUILD_ID);
     client.on('guildMemberAdd', async (member) => {
-        if (member.guild.id !== process.env.MY_GUILD_ID) return;
+        console.log(`👋 [Welcome] Thành viên mới: ${member.user.tag} (${member.id}) join server ${member.guild.name}`);
+        if (member.guild.id !== process.env.MY_GUILD_ID) {
+            console.log(`   ⏭️ [Welcome] Bỏ qua (không phải guild target)`);
+            return;
+        }
 
         const channel = member.guild.channels.cache.get(process.env.WELCOME_CHANNEL_ID);
         if (!channel) {
@@ -31,6 +36,7 @@ function setupWelcome(client) {
 
         try {
             await channel.send(message);
+            console.log(`   ✅ [Welcome] Đã gửi tin nhắn chào mừng cho ${member.user.tag}`);
         } catch (error) {
             console.error('❌ Lỗi gửi tin nhắn chào mừng:', error);
         }

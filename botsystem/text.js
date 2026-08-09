@@ -19,7 +19,9 @@ if (fs.existsSync(envPath)) {
 }
 
 async function handle(interaction) {
+    console.log(`📝 [Text] Lệnh /text từ ${interaction.user.tag}`);
     if (interaction.user.id !== process.env.OWNER_ID) {
+        console.log(`   ⚠️ [Text] User không có quyền sử dụng lệnh này`);
         return interaction.reply({ content: '⚠️ Chỉ người được phép mới có thể dùng lệnh này.', ephemeral: true });
     }
 
@@ -61,6 +63,7 @@ async function handle(interaction) {
 }
 
 function setupInteraction(client) {
+    console.log('   🔧 [Text] Setup text command handler');
     client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
         if (interaction.commandName === 'text') {

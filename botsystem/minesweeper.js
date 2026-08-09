@@ -31,16 +31,19 @@ function saveState() {
 }
 
 async function handleRandommute(interaction, minesweeperState, saveState) {
+    console.log(`🎲 [Minesweeper] Lệnh /randommute từ ${interaction.user.tag} trong server ${interaction.guild.name}`);
     const currentState = minesweeperState.get(interaction.guild.id) || false;
     const newState = !currentState;
     minesweeperState.set(interaction.guild.id, newState);
     saveState();
 
     const status = newState ? '✅ Đã BẬT' : '❌ Đã TẮT';
+    console.log(`   ${status} chế độ bắt cóc xuống tầng hầm trong server ${interaction.guild.name}`);
     return interaction.reply({ content: `${status} chế độ bắt cóc xuống tầng hầm trong server này!` });
 }
 
 function setupInteraction(client, minesweeperState, saveState) {
+    console.log('   🔧 [Minesweeper] Setup randommute command handler');
     client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
         if (interaction.commandName === 'randommute') {
@@ -50,6 +53,7 @@ function setupInteraction(client, minesweeperState, saveState) {
 }
 
 function setupMessageHandler(client) {
+    console.log('   🔧 [Minesweeper] Setup random mute handler');
     client.on('messageCreate', async (message) => {
         if (message.author.bot || !message.guild || !message.member) return;
 
@@ -68,7 +72,7 @@ function setupMessageHandler(client) {
                     }
 
                     const muteDurationMs = 5 * 60 * 1000;
-                    console.log(`🎉 ${message.author.tag} (${message.author.id}) đã bị mute 5 phút`);
+                    console.log(`🎉 [Minesweeper] ${message.author.tag} (${message.author.id}) đã bị mute 5 phút`);
                     await message.member.timeout(muteDurationMs, 'Bắt cóc xuống tầng hầm');
                     await message.reply(`🎉 CHÚC MỪNG IEM <@${message.author.id}> ĐÃ BỊ BẮC CÓC XUỐNG TẦNG HẦM NHÀ ANH, thôi ráng chịu ở dưới đấy 5 phút nhé 😛`);
                     return;

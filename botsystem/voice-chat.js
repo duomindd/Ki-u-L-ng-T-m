@@ -76,18 +76,22 @@ function joinAndStay(voiceChannel) {
 }
 
 async function handleJoin(interaction) {
+    console.log(`🎤 [Voice] Lệnh /join từ ${interaction.user.tag}`);
     const voiceChannel = interaction.member.voice.channel;
 
     if (!voiceChannel) {
+        console.log(`   ⚠️ [Voice] User không ở trong voice channel`);
         return interaction.reply({ content: '❌ Bạn phải vào một kênh voice chat trước!', ephemeral: true });
     }
 
     const permissions = voiceChannel.permissionsFor(interaction.client.user);
     if (!permissions?.has('Connect') || !permissions?.has('Speak')) {
+        console.log(`   ⚠️ [Voice] Bot thiếu quyền Connect hoặc Speak`);
         return interaction.reply({ content: '❌ Bot thiếu quyền Connect hoặc Speak trong kênh này!', ephemeral: true });
     }
 
     try {
+        console.log(`   ✅ [Voice] Đang join vào kênh ${voiceChannel.name} (${voiceChannel.id})`);
         joinAndStay(voiceChannel);
         return interaction.reply({ content: `✅ Đã kết nối và treo máy tại kênh: **${voiceChannel.name}**!` });
     } catch (error) {
@@ -97,16 +101,20 @@ async function handleJoin(interaction) {
 }
 
 async function handleLeave(interaction, voiceState, cleanupConnection) {
+    console.log(`🎤 [Voice] Lệnh /leave từ ${interaction.user.tag}`);
     const state = voiceState.get(interaction.guild.id);
     if (!state) {
+        console.log(`   ⚠️ [Voice] Bot không ở trong voice channel nào`);
         return interaction.reply({ content: '❌ Bot hiện không ở trong kênh voice nào!', ephemeral: true });
     }
 
+    console.log(`   ✅ [Voice] Đang rời voice channel`);
     cleanupConnection(interaction.guild.id);
     return interaction.reply({ content: '👋 Đã rời kênh voice!' });
 }
 
 function setupInteraction(client) {
+    console.log('   🔧 [Voice] Setup voice command handler');
     client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
 
