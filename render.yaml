@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: discord-voice-bot-247
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: TOKEN
+        sync: false
+      - key: OWNER_ID
+        sync: false
+      - key: MY_GUILD_ID
+        sync: false
+      - key: COMMAND_GUILD_ID
+        sync: false
+      - key: WELCOME_CHANNEL_ID
+        sync: false

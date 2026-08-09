@@ -115,7 +115,7 @@ function setupInteraction(client) {
                 await handleJoin(interaction);
                 break;
             case 'leave':
-                await handleLeave(interaction);
+                await handleLeave(interaction, voiceState, cleanupConnection);
                 break;
         }
     });
